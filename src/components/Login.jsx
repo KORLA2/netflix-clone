@@ -1,13 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState,useRef } from 'react'
 import Header from './Header'
+import {ValidateEmail,ValidatePassword} from "../../utils/validate"
 
 const Login = () => {
 
   let [signIn,setSignIn]=useState(1);
+  let [EmailError,setEmailError]=useState(false)
+  let [PasswordError,setPasswordError]=useState(false)
+  let Email=useRef(null)
+  let Password=useRef(null)
   let handleSignIn=()=>{
 
     setSignIn(!signIn)
   }
+
+  function handleButtonClick(){
+    
+      let EmailError=ValidateEmail(Email.current.value)
+        let PasswordError=ValidatePassword(Password.current.value);
+    
+  setEmailError(EmailError);
+  setPasswordError(PasswordError);
+
+    }
+      function handleBlurEmail(){
+    
+      let EmailErr=ValidateEmail(Email.current.value)
+       console.log(EmailErr)
+
+  setEmailError(EmailErr);
+
+    }
+    function handleBlurPassword(){
+   let PasswordError=ValidatePassword(Password.current.value);
+    
+      setPasswordError(PasswordError);
+
+    }
+       console.log(EmailError)
+
   return (
     <div  >
         <Header/>
@@ -19,14 +50,18 @@ const Login = () => {
 
       <div className="absolute top-0 left-0 w-full h-full mt-40 flex justify-center items-center" >
 
-      <form className="bg-black bg-opacity-50 p-14 rounded-lg z-10 w-120" >
+      <form className="bg-black bg-opacity-50 p-14 rounded-lg z-10 w-120" onSubmit={(e)=>e.preventDefault()} >
         <h1  className="text-white text-4xl font-bold mb-6">{!signIn?"Sign Up":"Sign In"} </h1>
+  
+ 
  { !signIn&&(<input  placeholder='Name' type="text"className="p-4 my-4 text-lg text-white border-2 rounded-lg border-gray-500  w-full"/>) }
-<input placeholder='Email or mobile number' type="text" className="p-4  my-4 text-lg border-2 rounded-lg border-gray-500 text-white bg-transparent w-full"/>
-<input  placeholder='Password' type="password"className="p-4 my-4 text-lg text-white border-2 rounded-lg border-gray-500  w-full"/>
-  <button className="p-3 my-4 text-xl font-medium text-white rounded-lg  bg-red-600 w-full">{!signIn?"Sign Up":"Sign In"}</button>
+<input placeholder='Email or mobile number' type="text" onFocus={()=>setEmailError(false)} onBlur={handleBlurEmail} ref={Email} className="p-4  my-4 text-lg border-2 rounded-lg border-gray-500 text-white bg-transparent w-full"/>
+  {EmailError&&<p className="text-red-700 text-xl font-medium">⚠️Please enter a valid email or mobile number.</p>} 
+<input  placeholder='Password' type="password" ref={Password} onFocus={()=>setPasswordError(false)} onBlur={handleBlurPassword} className="p-4 my-4 text-lg text-white border-2 rounded-lg border-gray-500  w-full"/>
+  {PasswordError&&<p className="text-red-700 text-xl font-medium">⚠️Your password must contain between 4 and 60 characters.</p>}
+  <button className="p-3 my-4 text-xl font-medium text-white rounded-lg cursor-pointer bg-red-600 w-full" onClick={handleButtonClick}>{!signIn?"Sign Up":"Sign In"}</button>
   <p className='text-xl text-center text-gray-500'>OR</p> 
-  <button className="p-4 my-4 text-lg text-white border-2 rounded-lg border-gray-500 bg-gray-400 w-full">Use a sign-in code</button> 
+  <button className="p-4 my-4 text-lg text-white border-2 rounded-lg cursor-pointer border-gray-500 bg-gray-400 w-full">Use a sign-in code</button> 
   <h1 className='underline text-white text-xl text-center'>Forgot password?</h1>
   <label className="flex items-center mt-4">
  <input type="checkbox" className="accent-white-600 w-5 h-5 cursor-pointer bg-white" />
