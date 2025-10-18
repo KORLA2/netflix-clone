@@ -1,13 +1,21 @@
 import { useState } from 'react'
-
-
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {Login,Browse} from './components';
 function App() {
-  
+  let approuter=createBrowserRouter([
+    {
+      path:"/",
+      element:<Login/>
+    },{
+      path:"/browse",
+      element:<Browse/>
+    }
+  ])
 
   return (
-    <div className='w-50 mx-auto my-7 p-4 bg-green-600 rounded-2xl border-red-400 border-2 '>
-      Cart
-    </div>
+   <div>
+    <RouterProvider router={approuter}/>
+   </div>
   )
 }
 
