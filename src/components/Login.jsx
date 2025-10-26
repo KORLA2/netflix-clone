@@ -13,7 +13,8 @@ const Login = () => {
   let [EmailError,setEmailError]=useState(false)
   let [PasswordError,setPasswordError]=useState(false);
   let [FirebaseError,setFirebaseError]=useState("");
-let userInfo=useSelector(store=>store.userSlice)
+  let [Loading,setLoading]=useState(false)
+let storeuser=useSelector(store=>store.userSlice)
 let dispatch=useDispatch()
   let Email=useRef(null)
   let Name=useRef(null)
@@ -24,7 +25,7 @@ let dispatch=useDispatch()
   }
 
   function handleButtonClick(){
-    
+    setLoading(true)
       let EmailError=ValidateEmail(Email.current.value)
         let PasswordError=ValidatePassword(Password.current.value);
     
@@ -34,7 +35,7 @@ let dispatch=useDispatch()
      if(!signIn){
 
       // Sign Up Logic Fire Base
-createUserWithEmailAndPassword(auth, Email.current.value, Password.current.value)
+ createUserWithEmailAndPassword(auth, Email.current.value, Password.current.value)
   .then((userCredential) => {
     // Signed up 
     const loginuser = userCredential.user;
@@ -42,20 +43,22 @@ createUserWithEmailAndPassword(auth, Email.current.value, Password.current.value
     updateProfile(loginuser, {
       displayName: Name.current.value, photoURL: "https://avatars.githubusercontent.com/u/96729391?s=96&v=4"
     }).then(() => {
-       let user=auth.currentUser
+       let user=storeuser;
   dispatch(addUser(
-    {uid:user.uid,displayName:user.displayName,email:user.email,photoURL:user.photoURL}
+    { ...user, displayName:user.displayName,photoURL:user.photoURL}
   ))
     }).catch((error) => {
+      setLoading(false)
       console.log(error)
+      
+
     });
 
- 
 
-navigate("/browse")
 
   })
   .catch((error) => {
+    setLoading(false)
     const errorCode = error.code;
     const errorMessage = error.message;
    setFirebaseError(errorCode+"-"+errorMessage)
@@ -69,9 +72,9 @@ navigate("/browse")
     const user = userCredential.user;
    console.log(user)
  
-navigate("/browse")
   })
   .catch((error) => {
+    setLoading(false)
     const errorCode = error.code;
     const errorMessage = error.message;
    setFirebaseError(errorCode+"-"+errorMessage)
@@ -117,8 +120,32 @@ navigate("/browse")
   {EmailError&&<p className="text-red-700 text-xl font-medium">⚠️Please enter a valid email or mobile number.</p>} 
 <input  placeholder='Password' type="password" ref={Password} onFocus={()=>setPasswordError(false)} onBlur={handleBlurPassword} className="p-4 my-4 text-lg text-white border-2 rounded-lg border-gray-500  w-full"/>
   {PasswordError&&<p className="text-red-700 text-xl font-medium">⚠️Your password must contain between 4 and 60 characters.</p>}
-  <button className="p-3 my-4 text-xl font-medium text-white rounded-lg cursor-pointer
-   bg-red-600 w-full" onClick={handleButtonClick}>{!signIn?"Sign Up":"Sign In"}</button>
+  {!Loading?<button className="p-3 my-4 text-xl font-medium text-white rounded-lg cursor-pointer
+   bg-red-600 w-full" onClick={handleButtonClick}>{!signIn?"Sign Up":"Sign In"}</button>:
+   <button   className="bg-red-600 text-white px-5 py-4 rounded-md flex items-center justify-center w-full">
+
+            <svg
+          className="animate-spin h-5 w-5 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
+          ></path>
+        </svg>
+   </button>
+  }
   <p className='text-xl text-center text-gray-500'>OR</p> 
   <button className="p-4 my-4 text-lg text-white border-2 rounded-lg cursor-pointer border-gray-500 bg-gray-400 w-full">Use a sign-in code</button> 
   <h1 className='underline text-white text-xl text-center'>Forgot password?</h1>

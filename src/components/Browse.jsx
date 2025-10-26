@@ -1,15 +1,17 @@
-import React, { useContext,useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import UserContext from '../../utils/contexts';
+import { useSelector } from 'react-redux';
+import { useNowPlaying } from '../../hooks/useNowPlaying';
 import Header from './Header';
-
+import MainContainer from './MainContainer';
 const Browse = () => {
 
-  let userInfo=useSelector((store)=>store.userSlice);
-  console.log(userInfo)
+useNowPlaying()
+
   return (
 
-    <div><Header/></div>
+    <div><Header/>
+    <MainContainer  />
+    {/* <MoviesCarousel/> */}
+    </div>
   )
 }
 
