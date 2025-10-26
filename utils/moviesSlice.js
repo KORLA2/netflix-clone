@@ -5,7 +5,10 @@ import { createSlice } from "@reduxjs/toolkit";
  initialState:{
     Trailer:null,
     nowPlaying:null ,
-    
+    popularMovies:null,
+    trendingMovies:null,
+    upComingMovies:null,
+
  },
 reducers:{
     addnowPlayingMovies:(state,action)=>{
@@ -14,10 +17,19 @@ reducers:{
     addTrailer:(state,action)=>{
      state.Trailer=action.payload
 
+    },
+    addPopularMovies:(state,action)=>{
+        state.popularMovies=action.payload
+    },
+     addTrendingMovies:(state,action)=>{
+        state.trendingMovies=action.payload
+    }, 
+    addUpComingMovies:(state,action)=>{
+        state.upComingMovies=action.payload
     }
 }
 
 })
 
-export let {addnowPlayingMovies,addTrailer}=moviesSlice.actions;
+export let {addnowPlayingMovies,addTrailer,addPopularMovies,addTrendingMovies,addUpComingMovies}=moviesSlice.actions;
 export default moviesSlice.reducer

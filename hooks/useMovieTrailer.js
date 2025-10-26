@@ -8,7 +8,7 @@ export let useMovieTrailer=(movie)=>{
 console.log(movie)
 console.log('https://api.themoviedb.org/3/movie/'+movie?.genre_ids[0]+'/videos')
 let GetVideo=async ()=>{
-let Video=await fetch('https://api.themoviedb.org/3/movie/12/videos'
+let Video=await fetch('https://api.themoviedb.org/3/movie/755898/videos'
     ,options)
 let jsonVideo= await Video.json();
 

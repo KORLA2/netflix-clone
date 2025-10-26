@@ -5,7 +5,7 @@ import VideoBackground from "./VideoBackground"
 const MainContainer = () => {
 
 let movies=useSelector(store=>store.movieSlice.nowPlaying)
-let movie=movies?.length?movies[2]:null;
+let movie=movies?.length?movies[3]:null;
   return (
     <div>
         <VideoTitle movie={movie}/>
