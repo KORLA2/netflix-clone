@@ -11,7 +11,7 @@ let upComingMovies=useSelector(store=>store.movieSlice.upComingMovies);
 
   return (
     <div className='bg-black'>
-<div className='-mt-40 z-10 relative'>
+<div className='-mt-70 z-10 relative'>
 
         <MovieList text="Now Playing" movies={nowPlayingMovies}/>
         <MovieList text="Trending" movies={trendingMovies}/>

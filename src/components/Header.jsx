@@ -6,6 +6,7 @@ import userSlice, { addUser,removeUser } from '../../utils/userSlice';
 import {  signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { handleShowGPT } from '../../utils/GPTSlice';
 const Header = () => {
 let dispatch=useDispatch()
 let navigate=useNavigate()
@@ -36,6 +37,12 @@ let user=useSelector(store=>store.userSlice)
  return ()=>unsubscribe();
  
   },[])
+
+let handleGPTSearch=()=>{
+
+  dispatch(handleShowGPT())
+}
+
   return (
 
 
@@ -46,8 +53,12 @@ let user=useSelector(store=>store.userSlice)
 
 {user&&(<div className='flex items-center mx-10'>
 
+<button className='bg-red-700 p-2 rounded-lg  cursor-pointer hover:bg-red-800 font-medium text-black'
+onClick={()=>handleGPTSearch()}
+>GPT Search</button>
  <img className="w-15 h-15 mx-5" src={user?.photoURL}/>
   <button onClick={signOutUser} className="text-black font-bold bg-red-700 p-2 h-10 border border-red-700 cursor-pointer  rounded-lg">SignOut</button>
+
 </div>
 )}
     </div>
