@@ -12,7 +12,7 @@ dist
 dist-ssr
 /utils/firebase.js
 *.local
-
+/utils/openapi.js
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

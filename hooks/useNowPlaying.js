@@ -9,7 +9,6 @@ export let useNowPlaying=()=>{
 let FetchMoviesApi=async()=>{
  let data= await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&page=1&sort_by=popularity.desc', options)
  let jsondata=await data.json();
- console.log(jsondata.results)
 dispatch(addnowPlayingMovies(jsondata.results))
 
 }

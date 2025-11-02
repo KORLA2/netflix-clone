@@ -14,7 +14,6 @@ let userSlice=createSlice({
         }
     }
 })
-console.log(userSlice)
 export let {addUser,removeUser}=userSlice.actions;
 
 export default userSlice.reducer;

@@ -6,7 +6,6 @@ const VideoBackground = ({movie}) => {
 useMovieTrailer(movie)
 
 let trailer=useSelector(store=>store.movieSlice.Trailer);
-console.log(trailer)
   return (
 
     <div  className='w-screen aspect-video'>

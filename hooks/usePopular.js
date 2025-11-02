@@ -9,7 +9,6 @@ export let usePopular=()=>{
 let FetchPopularMoviesApi=async()=>{
  let data= await fetch('https://api.themoviedb.org/3/movie/popular', options)
  let jsondata=await data.json();
- console.log(jsondata.results)
 dispatch(addPopularMovies(jsondata.results))
 
 }

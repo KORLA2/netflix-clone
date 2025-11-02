@@ -7,6 +7,7 @@ import UserContext from '../../utils/contexts';
 import { useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { addUser } from '../../utils/userSlice';
+import { BG_IMG } from '../../utils/constants';
 const Login = () => {
   let navigate=useNavigate()
   let [signIn,setSignIn]=useState(1);
@@ -48,9 +49,7 @@ let dispatch=useDispatch()
     { ...user, displayName:user.displayName,photoURL:user.photoURL}
   ))
     }).catch((error) => {
-      setLoading(false)
-      console.log(error)
-      
+      setLoading(false)      
 
     });
 
@@ -70,7 +69,6 @@ let dispatch=useDispatch()
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-   console.log(user)
  
   })
   .catch((error) => {
@@ -87,7 +85,6 @@ let dispatch=useDispatch()
       function handleBlurEmail(){
     
       let EmailErr=ValidateEmail(Email.current.value)
-       console.log(EmailErr)
 
   setEmailError(EmailErr);
 
@@ -103,7 +100,7 @@ let dispatch=useDispatch()
     <div  >
         <Header/>
         <div className="relative min-h-[1000px]">
-    <img src="https://assets.nflxext.com/ffe/siteui/vlv3/7c9e63f7-5b5d-43a4-a3fb-41917ac25301/web/IN-en-20251013-TRIFECTA-perspective_7bc35267-b383-4fb3-b173-eae32292d42e_large.jpg"
+    <img src={BG_IMG}
             className='absolute top-0 left-0  w-full h-full object-cover'
             />
             </div>

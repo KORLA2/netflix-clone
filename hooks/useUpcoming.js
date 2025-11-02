@@ -9,7 +9,6 @@ export let useUpComing=()=>{
 let FetchUpComingMoviesApi=async()=>{
  let data= await fetch('https://api.themoviedb.org/3/movie/upcoming', options)
  let jsondata=await data.json();
- console.log(jsondata.results)
 dispatch(addUpComingMovies(jsondata.results))
 
 }

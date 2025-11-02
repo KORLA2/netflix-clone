@@ -9,7 +9,6 @@ export let useTrending=()=>{
 let FetchTrendingMoviesApi=async()=>{
  let data= await fetch('https://api.themoviedb.org/3/movie/top_rated', options)
  let jsondata=await data.json();
- console.log(jsondata.results)
 dispatch(addTrendingMovies(jsondata.results))
 
 }
