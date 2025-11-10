@@ -9,7 +9,7 @@ import { useTrending } from '../../hooks/useTrending';
 import { useUpComing } from '../../hooks/useUpcoming';
 import GPTSearch from './GPTSearch';
 const Browse = () => {
-
+// let user=useSelector(store=>store.userSlice.user)
 useNowPlaying()
 usePopular();
 useTrending();

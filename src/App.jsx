@@ -1,6 +1,6 @@
 import { useEffect, useState, } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import {Login,Browse} from './components';
+import {Login,Browse,MovieInfo} from './components';
 
 
 function App() {
@@ -12,7 +12,11 @@ function App() {
       element:<Login/>
     },{
       path:"/browse",
-      element:<Browse/>
+      element:<Browse/>,
+    },
+    {
+      path:"/browse/movieInfo",
+      element:<MovieInfo/>,
     }
   ])
  

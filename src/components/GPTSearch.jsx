@@ -31,7 +31,6 @@ const response = await openai.responses.create({
     model: "openai/gpt-oss-20b",
     input: query,
 });
-console.log(response.output_text.split(", "));
 
   let promisemovies=response.output_text.split(", ")?.map( (movie)=>showgptMovies(movie))
   let movies =await Promise.all(promisemovies);
@@ -42,9 +41,8 @@ dispatch(handlegptLoading())
 console.log("The Error is "+error)
     } 
 }
-  console.log(gptMovies)
+ 
 
-  console.log(gptMovies?.results?.map((movies)=>movies))
 
   return (
     <div >
@@ -52,8 +50,8 @@ console.log("The Error is "+error)
 
    <div className='flex justify-center'>
 
-<form className='grid grid-cols-12 gap-3 w-1/2  bg-black p-4 mt-30' onSubmit={(e)=>e.preventDefault()}>
-<input ref={gptRef} className='p-2 col-span-9 w-full mx-2 text-black bg-white' placeholder={lang[language].Placeholder}/>
+<form className='grid grid-cols-12 gap-3  w-full md:w-1/2  bg-black p-4 mt-50 md:mt-30' onSubmit={(e)=>e.preventDefault()}>
+<input ref={gptRef} className='p-2  col-span-9 w-full mx-2 text-black bg-white' placeholder={lang[language].Placeholder}/>
  { !gptLoading?<button onClick={handlegptSearch} className= 'col-span-3 mx-2 cursor-pointer bg-red-700 p-2 rounded-lg'>
 {lang[language].Search}
 </button>:
@@ -84,15 +82,15 @@ console.log("The Error is "+error)
 </form>
     </div> 
 
-  <div className="absolute -z-10 top-0 left-0">
+  <div className="fixed -z-10 top-0 left-0">
     <img src={BG_IMG}
-            className='scrollbar-hide h-full object-fit scrollbar-hide'/>
+            className='scrollbar-hide w-screen h-screen object-cover scrollbar-hide'/>
     </div>
 
  <div className='bg-black mt-30'>
 
 {
-    gptMovies?.map((movies)=><MovieList text={movies?.results[0]?.original_title} movies={movies?.results}/>)
+    gptMovies?.map((movies)=><MovieList key={movies?.results[0]?.id} text={movies?.results[0]?.original_title} movies={movies?.results}/>)
 }
        
 </div>

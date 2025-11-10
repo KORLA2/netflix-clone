@@ -1,4 +1,4 @@
-import React, { useContext,useState,useRef } from 'react'
+import React, { useContext,useState,useRef,useEffect } from 'react'
 import {auth} from "../../utils/firebase"
 import Header from './Header'
 import {ValidateEmail,ValidatePassword} from "../../utils/validate"
@@ -7,18 +7,39 @@ import UserContext from '../../utils/contexts';
 import { useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { addUser } from '../../utils/userSlice';
-import { BG_IMG } from '../../utils/constants';
+import { BG_IMG,IMG_CDN } from '../../utils/constants';
+import MovieList from './MovieList';
+import { useNowPlaying } from '../../hooks/useNowPlaying';
+import { setMovieInfo } from '../../utils/moviesSlice';
 const Login = () => {
   let navigate=useNavigate()
+  useNowPlaying()
   let [signIn,setSignIn]=useState(1);
   let [EmailError,setEmailError]=useState(false)
   let [PasswordError,setPasswordError]=useState(false);
   let [FirebaseError,setFirebaseError]=useState("");
   let [Loading,setLoading]=useState(false)
-let storeuser=useSelector(store=>store.userSlice)
+let storeuser=useSelector(store=>store.userSlice);
+let nowPlayingMovies=useSelector(store=>store.movieSlice.nowPlaying);
+let movie=useSelector(store=>store.movieSlice.showMovieInfo);
+console.log(movie)
 let dispatch=useDispatch()
   let Email=useRef(null)
   let Name=useRef(null)
+
+useEffect(()=>{
+if(movie){
+  document.body.style.overflow = "hidden"; 
+}else{
+  document.body.style.overflow = "auto"; 
+
+}
+return () => {
+    document.body.style.overflow = "auto";
+  };
+
+},[movie])
+
   let Password=useRef(null)
   let handleSignIn=()=>{
 
@@ -82,6 +103,10 @@ let dispatch=useDispatch()
      }
 
     }
+let closeShowInfo=()=>{
+  dispatch(setMovieInfo(null))
+}
+
       function handleBlurEmail(){
     
       let EmailErr=ValidateEmail(Email.current.value)
@@ -107,7 +132,7 @@ let dispatch=useDispatch()
 
       <div className="absolute top-0 left-0 w-full h-full mt-40 flex justify-center items-center" >
 
-      <form className="bg-black bg-opacity-50 p-14 rounded-lg z-10 w-120" onSubmit={(e)=>e.preventDefault()} >
+      <form className="bg-black bg-opacity-50 p-14 rounded-lg z-10 w-full sm:w-120 " onSubmit={(e)=>e.preventDefault()} >
         <h1  className="text-white text-4xl font-bold mb-6">{!signIn?"Sign Up":"Sign In"} </h1>
   
  { FirebaseError&&(<p className="text-red-700 text-xl font-medium">{FirebaseError}</p>) } 
@@ -156,7 +181,37 @@ let dispatch=useDispatch()
  </div>
 
       </form>
+
       </div>
+      <div className='bg-black z-20 top-200  w-full h-full'>
+          <MovieList text="Trending On Netflix" movies={nowPlayingMovies}/>
+      </div>
+{
+  movie&&(
+    <div className='fixed inset-10 p-5 inset-x-20 overflow-y-scroll bg-black bg-opacity-95 flex flex-col  justify-center items-center z-50'>
+    <div onClick={closeShowInfo} 
+    className="w-10 absolute text-3xl  right-5 top-5  h-10 flex justify-center items-center text-white bg-red-700 p-2 rounded-full cursor-pointer hover:bg-red-700 transition">X</div>
+    
+      {movie.poster_path&&(
+      
+          <div  className=' w-[80%] max-w-4xl'>
+              <img  className=" h-[200px] md:h-[400px] object-contain rounded-lg" alt="moviecard" src={IMG_CDN+movie.poster_path}/>
+              </div>
+          
+             )
+            }
+            <div className='text-left text-white p-4'>
+
+            <p className='text-3xl m-2 font-medium'>{movie?.title}</p>
+
+            <p className="text-xl m-2">{movie?.overview}</p>
+            <p className="m-2">{movie?.release_date}</p>
+            <span className=' m-2 flex'><p className='font-bold'>Rating:</p>{movie?.vote_average}/10</span>
+            </div>
+   
+    </div>
+  )
+}
 
         </div>
   

@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useEffect } from "react";
 import { options } from "../utils/constants";
 import {addTrendingMovies} from "../utils/moviesSlice"
 export let useTrending=()=>{
  let dispatch=useDispatch();
+ let trendingMovies =useSelector(store=>store.movieSlice.trendingMovies)
 
 
 let FetchTrendingMoviesApi=async()=>{
@@ -15,7 +16,7 @@ dispatch(addTrendingMovies(jsondata.results))
 
 
 useEffect(()=>{
-
+if(!trendingMovies)
 FetchTrendingMoviesApi();
 
 },[])
