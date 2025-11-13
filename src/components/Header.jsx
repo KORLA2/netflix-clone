@@ -15,11 +15,11 @@ import { BG_IMG, Logo_IMG } from '../../utils/constants';
 const Header = () => {
 let dispatch=useDispatch()
 let navigate=useNavigate()
-let user=useSelector(store=>store.userSlice)
+let user=useSelector(store=>store.userSlice.user)
 let showgpt=useSelector(store=>store.gptSlice.showgpt)
 let langRef=useRef(null)
 let isMenuOpen=useSelector(store=>store.menuSlice.isMenuOpen)
-
+console.log(user)
 let handleMenu=()=>{
   dispatch(toggleMenuIcon())
 }
@@ -56,7 +56,7 @@ let handleChange=(e)=>{
   },[])
 
 let handleGPTSearch=()=>{
-
+navigate("/browse")
   dispatch(handleShowGPT())
 }
 
@@ -92,7 +92,7 @@ onClick={()=>handleGPTSearch()}
 {
   user&&(
     <div className='mx-4 md:hidden'>
-     {!isMenuOpen&&<Menu className=' cursor-pointer scale-125 text-white' onClick={handleMenu}/>}
+     <Menu className='cursor-pointer mx-3  scale-125 text-white' onClick={handleMenu}/>
       {
         isMenuOpen&&(
           <div className='p-4 flex flex-col absolute right-5 rounded-lg top-5  opacity-90 bg-white'>

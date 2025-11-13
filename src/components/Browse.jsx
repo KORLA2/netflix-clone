@@ -19,7 +19,7 @@ let showGPTSearch=useSelector(store=>store.gptSlice.showgpt)
 
   return (
 
-    <div ><Header/>
+    <div >
    { showGPTSearch?<GPTSearch/>:<div>
     <MainContainer  />
     <SecondaryContainer/>

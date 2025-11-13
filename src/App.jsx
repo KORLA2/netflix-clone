@@ -1,29 +1,13 @@
-import { useEffect, useState, } from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import {Login,Browse,MovieInfo} from './components';
-
-
+import { Header } from "./components"
+import { Outlet } from "react-router-dom"
 function App() {
-
-
-  let approuter=createBrowserRouter([
-    {
-      path:"/",
-      element:<Login/>
-    },{
-      path:"/browse",
-      element:<Browse/>,
-    },
-    {
-      path:"/browse/movieInfo",
-      element:<MovieInfo/>,
-    }
-  ])
  
   return (
 
    <div className="overflow-x-hidden">
-    <RouterProvider router={approuter}/>
+    <Header/>
+    <Outlet/>
+  
    </div>
 
   )

@@ -122,8 +122,8 @@ let closeShowInfo=()=>{
     }
 
   return (
-    <div  >
-        <Header/>
+    <div>
+        
         <div className="relative min-h-[1000px]">
     <img src={BG_IMG}
             className='absolute top-0 left-0  w-full h-full object-cover'
@@ -188,25 +188,25 @@ let closeShowInfo=()=>{
       </div>
 {
   movie&&(
-    <div className='fixed inset-10 p-5 inset-x-20 overflow-y-scroll bg-black bg-opacity-95 flex flex-col  justify-center items-center z-50'>
+    <div className='fixed inset-10 p-5 inset-x-20 overflow-y-scroll bg-gradient-to-b from-black via-red-900 to-black bg-opacity-55 flex flex-col justify-evenly items-start z-50'>
     <div onClick={closeShowInfo} 
-    className="w-10 absolute text-3xl  right-5 top-5  h-10 flex justify-center items-center text-white bg-red-700 p-2 rounded-full cursor-pointer hover:bg-red-700 transition">X</div>
+    className="w-10 absolute text-3xl right-5 top-5  h-10 flex justify-center items-center text-white bg-red-700 p-2 rounded-full cursor-pointer hover:bg-red-700 transition">X</div>
     
       {movie.poster_path&&(
       
-          <div  className=' w-[80%] max-w-4xl'>
-              <img  className=" h-[200px] md:h-[400px] object-contain rounded-lg" alt="moviecard" src={IMG_CDN+movie.poster_path}/>
+          <div className='w-[100%] max-w-4xl '>
+              <img  className="h-[150px] md:h-[200px] lg:h-[300px] object-contain rounded-lg" alt="moviecard" src={IMG_CDN+movie.poster_path}/>
               </div>
           
              )
             }
-            <div className='text-left text-white p-4'>
+            <div className='text-white'>
 
-            <p className='text-3xl m-2 font-medium'>{movie?.title}</p>
+            <p className='text-xl md:text-2xl  font-medium'>{movie?.title}</p>
 
-            <p className="text-xl m-2">{movie?.overview}</p>
-            <p className="m-2">{movie?.release_date}</p>
-            <span className=' m-2 flex'><p className='font-bold'>Rating:</p>{movie?.vote_average}/10</span>
+            <p className="text-xs md:text-md">{movie?.overview}</p>
+            <p>{movie?.release_date}</p>
+            <span className=' flex'><p className='font-bold'>Rating:</p>{movie?.vote_average}/10</span>
             </div>
    
     </div>
